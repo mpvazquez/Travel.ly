@@ -14,4 +14,4 @@ test:
   pool: 5
   host: localhost
   username: <%= `whoami` %>
-  password:
+  password: 
