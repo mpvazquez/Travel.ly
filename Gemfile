@@ -42,6 +42,8 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+gem 'flickraw'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
