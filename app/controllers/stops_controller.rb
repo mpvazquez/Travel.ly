@@ -12,7 +12,6 @@ class StopsController < ApplicationController
     #   longitude: params[:longitude]
     #   )
   end
-end
 	
 	# POST /trips/:trip_id/stops
 	def create
@@ -26,7 +25,7 @@ end
 				latitude: params[:latitude], 
 				longitude: params[:longitude], 
 				google_id: params[:google_id],  
-				description: params[:description])
+				description: params[:description]
 			})
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.save
