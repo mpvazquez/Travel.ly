@@ -35,7 +35,7 @@ end
 group :development, :test do
   gem 'jasmine'
   gem 'rspec-rails'
-  gem 'capybara-rails'
+  gem 'capybara'
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'shoulda-matchers'

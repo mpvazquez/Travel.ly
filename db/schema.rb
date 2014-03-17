@@ -25,8 +25,11 @@ ActiveRecord::Schema.define(version: 20140317190421) do
     t.string   "google_id"
     t.text     "photo_url"
     t.text     "description"
+  end
+
+  create_table "trips", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
 end
