@@ -6,6 +6,7 @@ Travelly::Application.routes.draw do
   root 'welcome#index'
 
   resources :trips do
+    resources :stops
   end
 
   # Example of regular route:
