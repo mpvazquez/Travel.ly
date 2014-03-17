@@ -1,4 +1,6 @@
 class StopsController < ApplicationController
+	
+	# POST /trips/:trip_id/stops
 	def create
 		@place = Place.find_by(google_id: params[:google_id])
 
