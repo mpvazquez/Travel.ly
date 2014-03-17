@@ -2,7 +2,7 @@
 <%= image_tag @entry.photo.url %>
 <%= image_tag @entry.photo.url(:thumb) %>
  -->
-
+<h1><%= @entry.title %></h1>
 <%= image_tag @entry.photo.url(:medium) %>
 <p><%= @entry.text %></p>
 <%= button_to "Delete this entry", entry_path(@entry), method: :delete, data: { confirm: "Are you sure?"} %>

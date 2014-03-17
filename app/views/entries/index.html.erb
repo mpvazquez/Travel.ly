@@ -1,4 +1,5 @@
 <% @entries.each do |entry| %>
+  <h1><%= entry.title %></h1>
   <p><%= image_tag entry.photo.url(:medium) %></p>
   <br><a href="<%= entry_path(entry) %>">View page</a>
 <% end %>
