@@ -1,0 +1,10 @@
+<!-- 
+<%= image_tag @entry.photo.url %>
+<%= image_tag @entry.photo.url(:thumb) %>
+ -->
+
+<%= image_tag @entry.photo.url(:medium) %>
+<p><%= @entry.text %></p>
+<%= button_to "Delete this entry", entry_path(@entry), method: :delete, data: { confirm: "Are you sure?"} %>
+
+<br /><a href="/entries/<%= @entry.id %>/edit">Edit this entry</a>

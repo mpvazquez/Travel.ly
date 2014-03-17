@@ -8,6 +8,9 @@ Travelly::Application.routes.draw do
   resources :trips do
   end
 
+  resources :entries do
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

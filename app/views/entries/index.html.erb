@@ -1,0 +1,4 @@
+<% @entries.each do |entry| %>
+  <p><%= image_tag entry.photo.url(:medium) %></p>
+  <br><a href="<%= entry_path(entry) %>">View page</a>
+<% end %>
