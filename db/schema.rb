@@ -11,20 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140317190421) do
+ActiveRecord::Schema.define(version: 20140317194810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "places", force: true do |t|
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "google_id"
-    t.text     "photo_url"
-    t.text     "description"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.float  "latitude"
+    t.float  "longitude"
+    t.string "google_id"
+    t.text   "photo_url"
+    t.text   "description"
+  end
+
+  create_table "stops", force: true do |t|
+    t.integer "trip_id"
+    t.integer "place_id"
   end
 
   create_table "trips", force: true do |t|
@@ -32,4 +37,5 @@ ActiveRecord::Schema.define(version: 20140317190421) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
 end
