@@ -33,6 +33,5 @@ class StopsController < ApplicationController
 		url = FlickRaw.url_b(info)  
 
 		return url
-
 	end
 end
