@@ -17,14 +17,16 @@ ActiveRecord::Schema.define(version: 20140317194810) do
   enable_extension "plpgsql"
 
   create_table "places", force: true do |t|
-    t.string "city"
-    t.string "state"
-    t.string "country"
-    t.float  "latitude"
-    t.float  "longitude"
-    t.string "google_id"
-    t.text   "photo_url"
-    t.text   "description"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "google_id"
+    t.text     "photo_url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "stops", force: true do |t|
