@@ -1,0 +1,8 @@
+<h1>Create a Trip!</h1>
+
+
+<%= form_for @trip, html: { class: "new-trip" } do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.submit "Create trip!" %>
+<% end %>
