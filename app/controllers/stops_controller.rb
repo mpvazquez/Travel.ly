@@ -1,32 +1,20 @@
 class StopsController < ApplicationController
   def new
-    # @search_query = 
-    # # @response = HTTParty.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+search_query+'&sensor=false&key='+GOOGLE_MAPS_API_KEY)
-
-    # @stop = Stop.new(
-    #   city: params[:city], 
-    #   state: params[:state], 
-    #   country: params[:country],
-    #   google_id: params[:google_id],
-    #   latitude: params[:latitude],
-    #   longitude: params[:longitude]
-    #   )
+    
   end
 	
-	# POST /trips/:trip_id/stops
 	def create
-		@place = Place.find_by(google_id: params[:google_id])
+		@place = Place.find_by(google_id: @google_id)
 
 		unless @place.present?
 			@place = Place.new({
-				city: params[:city], 
-				state: params[:state], 
-				country: params[:country], 
-				latitude: params[:latitude], 
-				longitude: params[:longitude], 
-				google_id: params[:google_id],  
-				description: params[:description]
-			})
+        city: @city, 
+        state: @state, 
+        country: @country,
+        google_id: @google_id,
+        latitude: @latitude,
+        longitude: @longitude
+      })
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.save
 		end
