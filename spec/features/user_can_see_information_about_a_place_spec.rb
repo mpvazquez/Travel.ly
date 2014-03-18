@@ -8,7 +8,6 @@ describe "user can visit a place page" do
     expect(page).to have_content(@place.city)
     expect(page).to have_content(@place.description)
     expect(page).to have_selector("img")
-    save_and_open_page
   end
 
 end
