@@ -29,7 +29,12 @@ class StopsController < ApplicationController
 	def show
 		@stop = Stop.find(params[:id])
 	end
-
+  # /trips/:trip_id/stops
+  def index
+    trip = Trip.find(params[:trip_id])
+    @stops = trip.stops.includes(:place)
+    render json: @stops.to_json(include: :place)
+  end
 
 	private
 
