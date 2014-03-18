@@ -1,10 +1,11 @@
 <h1><%= @trip.name %></h1>
 
 <div class="map-canvas" ></div>
-
 <div class="added-stops">
   <ul>
-    <%=  %>
+    <% @places.each do |place| %>
+      <li><%= place.city %>, <%= place.state %> </li>
+    <% end %>
   </ul>
 </div>
 
