@@ -12,6 +12,7 @@ class EntriesController < ApplicationController
 
   def new
     @entry = Entry.new
+    @stop = Stop.find(params[:stop_id])
   end
 
   def show

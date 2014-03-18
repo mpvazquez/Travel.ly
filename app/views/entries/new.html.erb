@@ -1,6 +1,6 @@
-<%= form_for @entry, :url => entries_path, :html => { :multipart => true } do |form| %>
+<%= form_for [@stop, @entry], :html => { :multipart => true } do |form| %>
   Add a photo: <%= form.file_field :photo %>
   <br />Title: <%= form.text_field :title %>
   <p><%= form.text_area :text %></p>
-  <%= form.submit %>
+  <%= form.submit :submit %>
 <% end %>

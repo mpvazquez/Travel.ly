@@ -17,7 +17,7 @@ class StopsController < ApplicationController
 				google_id: params[:google_id],  
 			})
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
-			@place.description = find_location("#{@place.city, @place.country}")
+			@place.description = find_location("#{@place.city}, #{@place.country}")
 			@place.save
 		end
 

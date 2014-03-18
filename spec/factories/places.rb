@@ -5,7 +5,7 @@ FactoryGirl.define do
     country { Faker::Address.country }
     latitude { Faker::Geolocation.lat }
     longitude { Faker::Geolocation.lng }
-    google_id { rand(3) * 400 }
+    google_id { |n| "#{n}" }
     description { Faker::HipsterIpsum.sentence }
     photo_url "http://placekitten.com/200/200"
   end
