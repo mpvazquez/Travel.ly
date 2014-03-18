@@ -1,8 +1,9 @@
 class EntriesController < ApplicationController
 
   def create
-    @entry = Entry.create(entry_params)
-    redirect_to entry_path(@entry.id)
+    @stop = Stop.find(params[:stop_id])
+    @entry = @stop.entries.create(entry_params)
+    redirect_to stop_path(@stop)
   end
 
   def destroy
