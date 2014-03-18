@@ -1,6 +1,9 @@
 <%= form_for [@stop, @entry], :html => { :multipart => true } do |form| %>
-  Add a photo: <%= form.file_field :photo %>
-  <br />Title: <%= form.text_field :title %>
-  <p><%= form.text_area :text %></p>
-  <%= form.submit :submit %>
+  <%= form.label :photo %>
+  <%= form.file_field :photo %>
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+  <%= form.label :text %>
+  <%= form.text_area :text %>
+  <%= form.submit %>
 <% end %>
