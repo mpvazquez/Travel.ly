@@ -27,12 +27,13 @@ class StopsController < ApplicationController
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.description = find_location("#{@place.city}, #{@place.country}")
 			@place.save
-      render :index
+      
 		end
 
 		@trip = Trip.find_by(id: params[:trip_id])
 
 		@trip.stops.create(place: @place)
+    redirect_to trip_path(@trip)
 	end
 
 	def find_city_photo(latitude, longitude)
