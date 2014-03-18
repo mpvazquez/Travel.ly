@@ -7,7 +7,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry = Entry.destroy(params[:id])
-    redirect_to entries_path
+    redirect_to stop_entries_path
   end
 
   def new
@@ -31,6 +31,6 @@ class EntriesController < ApplicationController
   private
 
   def entry_params
-    params.require(:entry).permit(:photo, :text, :title)
+    params.require(:entry).permit(:photo, :text, :title, :stop_id)
   end
 end
