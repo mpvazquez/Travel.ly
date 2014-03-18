@@ -1,9 +1,5 @@
 class EntriesController < ApplicationController
 
-  def index
-    @entries = Entry.all
-  end
-
   def create
     @entry = Entry.create(entry_params)
     redirect_to entry_path(@entry.id)
