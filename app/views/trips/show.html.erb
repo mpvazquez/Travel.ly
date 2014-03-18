@@ -1,6 +1,19 @@
+<style>
+  #map { 
+    margin: 2em auto;
+    width:100%; 
+    height: 40%;
+  }
+</style>
+
 <h1><%= @trip.name %></h1>
 
-<div class="map-canvas" ></div>
+<div id="map" >
+  <script>
+  var map = L.mapbox.map('map', 'itsangaris.hi94jjl6')
+      .setView([40, -74.50], 9);
+  </script>
+</div>
 <div class="added-stops">
   <ul>
     <% @stops.each do |stop| %>
