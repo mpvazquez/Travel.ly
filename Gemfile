@@ -43,6 +43,7 @@ group :development, :test do
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'pry-rails'
+  gem 'ffaker'
 end
 
 gem 'flickraw'
