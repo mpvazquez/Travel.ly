@@ -1,8 +1,15 @@
 <body>
-  <div>
+  <%= form_for [@trip, @stop] do |f| %>
     <input id="autocomplete" placeholder="Enter your address"
       type="text"></input>
-  </div>
+    <input type="hidden" name="google_id">
+    <input type="hidden" name="city">
+    <input type="hidden" name="state">
+    <input type="hidden" name="country">
+    <input type="hidden" name="latitude">
+    <input type="hidden" name="longitude">
+    <%= submit_tag "Add City" %>
+  <% end %>  
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
   <%= javascript_include_tag :stops %>
 </body>

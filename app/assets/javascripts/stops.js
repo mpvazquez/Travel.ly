@@ -1,3 +1,5 @@
+var form;
+
 function initialize() {
   var autocomplete = new google.maps.places.Autocomplete(
     (document.getElementById('autocomplete')),
@@ -27,8 +29,22 @@ function extractPlaceData(autocomplete) {
   placeData["latitude"] = object.geometry.location.k;
   placeData["longitude"] = object.geometry.location.A;
   console.log(placeData);
+  writeToForm(placeData);
+}
+
+var writeToForm = function(placeData) {
+  for (key in placeData) {
+    form.elements[key].value = placeData[key];
+  }
+  form.save
 }
 
 window.onload = function() {
   initialize();
+  form = document.querySelector("form");
+  form.addEventListener("keydown", function(event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+    }
+  });
 }

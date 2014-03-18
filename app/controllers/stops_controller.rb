@@ -1,6 +1,7 @@
 class StopsController < ApplicationController
   def new
-    
+    @stop = Stop.new
+    @trip = Trip.find(params[:trip_id])
   end
 	
 	def create
@@ -8,12 +9,12 @@ class StopsController < ApplicationController
 
 		unless @place.present?
 			@place = Place.new({
-        city: @city, 
-        state: @state, 
-        country: @country,
-        google_id: @google_id,
-        latitude: @latitude,
-        longitude: @longitude
+        city: params[:city], 
+        state: params[:state], 
+        country: params[:country],
+        google_id: params[:google_id],
+        latitude: params[:latitude],
+        longitude: params[:longitude]
       })
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.save
