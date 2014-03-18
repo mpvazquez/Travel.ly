@@ -12,7 +12,7 @@ class StopsController < ApplicationController
 				latitude: params[:latitude], 
 				longitude: params[:longitude], 
 				google_id: params[:google_id],  
-				description: params[:description])
+				description: params[:description]
 			})
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.save
@@ -22,6 +22,13 @@ class StopsController < ApplicationController
 
 		@trip.stops.create(place: @place)
 	end
+
+	def show
+		@stop = Stop.find(params[:id])
+	end
+
+
+	private
 
 	def find_city_photo(latitude, longitude)
 
