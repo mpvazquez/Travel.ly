@@ -11,7 +11,7 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
-    @places = @trip.places
+    @stops = @trip.stops
   end
 
   def getwaypoints
