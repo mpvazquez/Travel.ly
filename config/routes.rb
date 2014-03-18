@@ -8,4 +8,7 @@ Travelly::Application.routes.draw do
   end
 
   resources :places, only: [:show]
+
+get '/trips/:id/getwaypoints', to: "trips#getwaypoints"
+
 end
