@@ -1,10 +1,6 @@
 require 'addressable/uri'
 
 class StopsController < ApplicationController
-  def index
-    @trip = Trip.find(params[:trip_id])
-  end
-
   def new
     @stop = Stop.new
     @trip = Trip.find(params[:trip_id])
@@ -35,6 +31,16 @@ class StopsController < ApplicationController
 
   def show
     @stop = Stop.find(params[:id])
+  end
+
+  def index
+    @trip = Trip.find(params[:trip_id])
+    @stops = @trip.stops.includes(:place)
+
+    respond_to do |format|
+      format.json { render json: @stops.to_json(include: :place) }
+      format.html { render :index }
+    end
   end
 
   private
@@ -89,6 +95,5 @@ class StopsController < ApplicationController
     description = HTTParty.get("https://www.googleapis.com/freebase/v1/topic#{mid}?filter=/common/topic/description", :format => :json)
 
     return description["property"]["/common/topic/description"]["values"][0]["value"]
-
   end
 end
