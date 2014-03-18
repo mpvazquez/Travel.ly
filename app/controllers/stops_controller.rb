@@ -34,4 +34,5 @@ class StopsController < ApplicationController
 
 		return url
 	end
+
 end
