@@ -1,10 +1,6 @@
 require 'addressable/uri'
 
 class StopsController < ApplicationController
-  def index
-    @trip = Trip.find(params[:trip_id])
-  end
-
   def new
     @stop = Stop.new
     @trip = Trip.find(params[:trip_id])
@@ -23,7 +19,7 @@ class StopsController < ApplicationController
         google_id: params[:google_id],  
       })
       @place.photo_url = find_city_photo("#{@place.city}, #{@place.country}", "#{@place.state}")
-      @place.description = find_location("#{@place.city}, #{@place.country}")
+      @place.description = find_location("#{@place.city}, #{@place.country}", "#{@place.state}")
       @place.save      
     end
 
@@ -35,6 +31,16 @@ class StopsController < ApplicationController
 
   def show
     @stop = Stop.find(params[:id])
+  end
+
+  def index
+    @trip = Trip.find(params[:trip_id])
+    @stops = @trip.stops.includes(:place)
+
+    respond_to do |format|
+      format.json { render json: @stops.to_json(include: :place) }
+      format.html { render :index }
+    end
   end
 
   private
@@ -64,14 +70,28 @@ class StopsController < ApplicationController
     flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
   end
 
-  def find_location(location)
+  def find_location(location, state)
     url = Addressable::URI.parse('https://www.googleapis.com/freebase/v1/search')
+    
     url.query_values = {
       query: location,
-      type: "/location/location"
-    }
+      type: "/location/location",
+
+        }
     from_freebase = HTTParty.get(url, :format => :json)
+
+    if from_freebase["result"].length == 0
+      url = Addressable::URI.parse('https://www.googleapis.com/freebase/v1/search')
+    
+      url.query_values = {
+        query: state,
+        type: "/location/location",
+          }
+      from_freebase = HTTParty.get(url, :format => :json)
+    end
+
     mid = from_freebase["result"][0]["mid"]
+
     description = HTTParty.get("https://www.googleapis.com/freebase/v1/topic#{mid}?filter=/common/topic/description", :format => :json)
 
     return description["property"]["/common/topic/description"]["values"][0]["value"]
