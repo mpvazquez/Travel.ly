@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'freebase-api'
-gem 'addressable/uri'
+gem 'addressable'
 gem 'httparty'
 
 # Paperclip for image upload

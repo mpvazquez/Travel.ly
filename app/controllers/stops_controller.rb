@@ -1,7 +1,10 @@
+require 'addressable/uri'
+
 class StopsController < ApplicationController
 	
 	# POST /trips/:trip_id/stops
 	def create
+    binding.pry
 		@place = Place.find_by(google_id: params[:google_id])
 
 		unless @place.present?
@@ -14,7 +17,7 @@ class StopsController < ApplicationController
 				google_id: params[:google_id]
 			})
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
-			@place.description = find_location(@place.state, @place.country)
+			@place.description = find_location("#{@place.city, @place.country}")
 			@place.save
 		end
 
@@ -46,7 +49,5 @@ class StopsController < ApplicationController
     description = HTTParty.get("https://www.googleapis.com/freebase/v1/topic#{mid}?filter=/common/topic/description", :format => :json)
 
     return description["property"]["/common/topic/description"]["values"][0]["value"]
-
   end
-
 end
