@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+gem 'freebase-api'
+gem 'addressable/uri'
+gem 'httparty'
+
 # Paperclip for image upload
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 

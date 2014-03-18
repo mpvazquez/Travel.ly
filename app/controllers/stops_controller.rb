@@ -11,10 +11,10 @@ class StopsController < ApplicationController
 				country: params[:country], 
 				latitude: params[:latitude], 
 				longitude: params[:longitude], 
-				google_id: params[:google_id],  
-				description: params[:description])
+				google_id: params[:google_id]
 			})
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
+			@place.description = find_location(@place.state, @place.country)
 			@place.save
 		end
 
@@ -34,5 +34,19 @@ class StopsController < ApplicationController
 
 		return url
 	end
+
+	def find_location(location)
+    url = Addressable::URI.parse('https://www.googleapis.com/freebase/v1/search')
+    url.query_values = {
+      query: location,
+      type: "/location/location"
+        }
+    from_freebase = HTTParty.get(url, :format => :json)
+    mid = from_freebase["result"][0]["mid"]
+    description = HTTParty.get("https://www.googleapis.com/freebase/v1/topic#{mid}?filter=/common/topic/description", :format => :json)
+
+    return description["property"]["/common/topic/description"]["values"][0]["value"]
+
+  end
 
 end
