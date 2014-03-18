@@ -28,6 +28,9 @@ class StopsController < ApplicationController
 
 	def find_city_photo(latitude, longitude)
 
+		FlickRaw.api_key = FLICKR_CLIENT_ID
+		FlickRaw.shared_secret = FLICKR_SECRET_ID
+
 		results = flickr.places.findByLatLon(:lat => latitude, :lon => longitude)  
 		place_id = results[0]["place_id"]
 		photo_array = flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
