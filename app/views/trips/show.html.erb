@@ -1,11 +1,19 @@
 <h1><%= @trip.name %></h1>
 
 <div class="map-canvas" ></div>
-
 <div class="added-stops">
   <ul>
-    <%=  %>
+    <% @places.each do |place| %>
+      <% if place.city == place.state %>
+        <li><%= link_to "#{place.city}, #{place.country}", place_path(place) %></li>
+      <% elsif place.country == "United States"%>
+        <li><%= link_to "#{place.city}, #{place.state}", place_path(place) %></li>
+      <% else %>
+        <li><%= link_to "#{place.city}, #{place.country}", place_path(place) %></li>
+      <% end %>
+    <% end %>
   </ul>
+  <%= link_to "Add New Stop", new_trip_stop_path(@trip) %>
 </div>
 
 <script type="text/javascript">
