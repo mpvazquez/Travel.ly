@@ -13,6 +13,11 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
   end
 
+  def getwaypoints
+    @waypoints = Stop.where(trip_id: params[:id])
+    render json: @waypoints
+  end
+
 private
 
 def trip_params
