@@ -16,7 +16,7 @@ class StopsController < ApplicationController
 				longitude: params[:longitude], 
 				google_id: params[:google_id]
 			})
-			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
+			@place.photo_url = find_city_photo("#{@place.city, @place.country}", "#{@place.state}")
 			@place.description = find_location("#{@place.city, @place.country}")
 			@place.save
 		end
@@ -26,19 +26,31 @@ class StopsController < ApplicationController
 		@trip.stops.create(place: @place)
 	end
 
-	def find_city_photo(latitude, longitude)
+	def find_city_photo(place, secondplace)
 
 		FlickRaw.api_key = FLICKR_CLIENT_ID
 		FlickRaw.shared_secret = FLICKR_SECRET_ID
 
-		results = flickr.places.findByLatLon(:lat => latitude, :lon => longitude)  
-		place_id = results[0]["place_id"]
-		photo_array = flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
-		photo_id = photo_array[0]["id"]
-		info = flickr.photos.getInfo(:photo_id => photo_id)  
-		url = FlickRaw.url_b(info)  
+		result = flickr.places.find(:query => place)
 
-		return url
+		if result.length == 0
+		  result = flickr.places.find(:query => secondplace)
+		  place_id = result[0]["place_id"]
+		  photo_array = flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
+		  photo_id = photo_array[0]["id"]
+		  info = flickr.photos.getInfo(:photo_id => photo_id)  
+		  url = FlickRaw.url_b(info)  
+
+		  return url 
+		else
+		  place_id = result[0]["place_id"]
+		  photo_array = flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
+		  photo_id = photo_array[0]["id"]
+		  info = flickr.photos.getInfo(:photo_id => photo_id)  
+		  url = FlickRaw.url_b(info)  
+
+		  return url
+		end
 	end
 
 	def find_location(location)
