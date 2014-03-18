@@ -1,10 +1,16 @@
 require 'addressable/uri'
 
 class StopsController < ApplicationController
+  def index
+    @trip = Trip.find(params[:trip_id])
+  end
+
+  def new
+    @stop = Stop.new
+    @trip = Trip.find(params[:trip_id])
+  end
 	
-	# POST /trips/:trip_id/stops
 	def create
-    binding.pry
 		@place = Place.find_by(google_id: params[:google_id])
 
 		unless @place.present?
@@ -16,14 +22,18 @@ class StopsController < ApplicationController
 				longitude: params[:longitude], 
 				google_id: params[:google_id],  
 			})
+
+
 			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
 			@place.description = find_location("#{@place.city}, #{@place.country}")
 			@place.save
+      
 		end
 
 		@trip = Trip.find_by(id: params[:trip_id])
 
 		@trip.stops.create(place: @place)
+    redirect_to trip_path(@trip)
 	end
 
 	def show
