@@ -1,17 +1,19 @@
 class EntriesController < ApplicationController
 
   def create
-    @entry = Entry.create(entry_params)
-    redirect_to entry_path(@entry.id)
+    @stop = Stop.find(params[:stop_id])
+    @entry = @stop.entries.create(entry_params)
+    redirect_to stop_path(@stop)
   end
 
   def destroy
     @entry = Entry.destroy(params[:id])
-    redirect_to entries_path
+    redirect_to stop_entries_path
   end
 
   def new
     @entry = Entry.new
+    @stop = Stop.find(params[:stop_id])
   end
 
   def show
@@ -31,6 +33,6 @@ class EntriesController < ApplicationController
   private
 
   def entry_params
-    params.require(:entry).permit(:photo, :text, :title)
+    params.require(:entry).permit(:photo, :text, :title, :stop_id)
   end
 end

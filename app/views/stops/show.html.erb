@@ -1,0 +1,3 @@
+<%= render partial: "places/place_information", locals: {place: Place.find(@stop.place_id)} %>
+
+<%= render partial: "entries/show_entries", locals: {entries: @stop.entries} %>

@@ -1,0 +1,9 @@
+<h2>ENTRIES</h2>
+
+<% entries.each do |entry|%>
+  <% unless entry.photo_file_name.nil? %>
+    <%= image_tag entry.photo.url(:medium) %>
+  <% end %>
+  <h4><%= entry.title %></h4>
+  <p><%= entry.text %></p>
+<% end %>

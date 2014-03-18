@@ -1,0 +1,4 @@
+<h1><%= place.city %></h1>
+<h3><%= place.description %></h3>
+<img src=<%= place.photo_url %> width=400px>
+<img src="http://maps.googleapis.com/maps/api/staticmap?center= <%= place.latitude %> , <%= place.longitude%> &zoom=12&size=500x400&style=feature:road%7Cvisibility:off&style=feature:road.highway%7Cvisibility:simplified%7Ccolor:0xffffff&style=feature:road%7Celement:labels%7Cvisibility:off&key=AIzaSyDLoyQ6nYNysLD4Wuz12w9CYybVzJTJP4Q">

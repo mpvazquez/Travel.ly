@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Place do
 
+	subject { FactoryGirl.create(:place) }
+
 	it { should have_many(:trips).through(:stops) }
 	it { should have_many(:stops) }
 
@@ -11,6 +13,7 @@ describe Place do
 	it { should validate_presence_of(:latitude) }
 	it { should validate_presence_of(:longitude) }
 	it { should validate_presence_of(:google_id) }
+	it { should validate_uniqueness_of(:google_id) }
 	it { should validate_presence_of(:photo_url) }
 	it { should validate_presence_of(:description) }
 

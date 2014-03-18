@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#clear database
+Trip.delete_all
+Place.delete_all
+Stop.delete_all
+
+#Let's go to Thailand!
+trip = FactoryGirl.create(:trip, name: "Thailand Booze Cruise!")
+
+#creating 20 places with fake data
+20.times do
+  FactoryGirl.create(:place)
+end
+
+5.times do
+  Stop.create(trip: trip, place: Place.order("RANDOM()").first)
+end

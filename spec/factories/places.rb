@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :place do
-    city 'Chiang Mai'
-    state 'Chiang Mai'
-    country 'Thailand'
-    latitude 98.996
-    longitude 18.795
-    google_id "5c6214a4a31b6547a96640cd41d68a0744cd93e9"
-    description "RAMPAGE"
-    photo_url "http://media.comicbook.com/wp-content/uploads/2013/02/archer-season-3.jpg"
+    city { Faker::Address.city }
+    state { Faker::Address.neighborhood }
+    country { Faker::Address.country }
+    latitude { Faker::Geolocation.lat }
+    longitude { Faker::Geolocation.lng }
+    google_id { |n| "#{n}" }
+    description { Faker::HipsterIpsum.sentence }
+    photo_url "http://placekitten.com/200/200"
   end
 end
