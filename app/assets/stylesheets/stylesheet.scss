@@ -11,13 +11,12 @@ body {
   height: 40%;
 }
 
-.center {
-  text-align: center;
+.row {
+  background-color:rgba(72,72,72,0.4);
+  border-radius: 7px;
+  padding: 30px;
+}
+
+.container {
   margin-top: 200px;
 }
-
-.box {
-  background-color: lightgreen;
-  width: 200px;
-}
-
