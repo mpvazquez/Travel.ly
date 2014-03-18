@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+# Paperclip for image upload
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
@@ -40,6 +43,7 @@ group :development, :test do
   gem 'launchy'
   gem 'shoulda-matchers'
   gem 'pry-rails'
+  gem 'ffaker'
 end
 
 gem 'flickraw'
