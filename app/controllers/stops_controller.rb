@@ -9,61 +9,67 @@ class StopsController < ApplicationController
     @stop = Stop.new
     @trip = Trip.find(params[:trip_id])
   end
-	
-	def create
-		@place = Place.find_by(google_id: params[:google_id])
 
-		unless @place.present?
-			@place = Place.new({
-				city: params[:city], 
-				state: params[:state], 
-				country: params[:country], 
-				latitude: params[:latitude], 
-				longitude: params[:longitude], 
-				google_id: params[:google_id],  
-			})
+  def create
+    @place = Place.find_by(google_id: params[:google_id])
 
+    unless @place.present?
+      @place = Place.new({
+        city: params[:city], 
+        state: params[:state], 
+        country: params[:country], 
+        latitude: params[:latitude], 
+        longitude: params[:longitude], 
+        google_id: params[:google_id],  
+      })
+      @place.photo_url = find_city_photo("#{@place.city}, #{@place.country}", "#{@place.state}")
+      @place.description = find_location("#{@place.city}, #{@place.country}")
+      @place.save      
+    end
 
-			@place.photo_url = find_city_photo(@place.latitude, @place.longitude)
-			@place.description = find_location("#{@place.city}, #{@place.country}")
-			@place.save
-      
-		end
+    @trip = Trip.find_by(id: params[:trip_id])
 
-		@trip = Trip.find_by(id: params[:trip_id])
-
-		@trip.stops.create(place: @place)
+    @trip.stops.create(place: @place)
     redirect_to trip_path(@trip)
-	end
+  end
 
-	def show
-		@stop = Stop.find(params[:id])
-	end
+  def show
+    @stop = Stop.find(params[:id])
+  end
 
+  private
 
-	private
+  def find_city_photo(place, secondplace)
+    result = flickr.places.find(:query => place)
 
-	def find_city_photo(latitude, longitude)
+    if result.length == 0
+      result = flickr.places.find(:query => secondplace)
+    end
 
-		FlickRaw.api_key = FLICKR_CLIENT_ID
-		FlickRaw.shared_secret = FLICKR_SECRET_ID
+    photo_array = retrieve_photos(result[0]["place_id"])
 
-		results = flickr.places.findByLatLon(:lat => latitude, :lon => longitude)  
-		place_id = results[0]["place_id"]
-		photo_array = flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
-		photo_id = photo_array[0]["id"]
-		info = flickr.photos.getInfo(:photo_id => photo_id)  
-		url = FlickRaw.url_b(info)  
+    if photo_array.length == 0
+      result = flickr.places.find(:query => secondplace)
+      photo_array = retrieve_photos(result[0]["place_id"])
+    end
 
-		return url
-	end
+    photo_id = photo_array[0]["id"]
+    info = flickr.photos.getInfo(:photo_id => photo_id)  
+    url = FlickRaw.url(info)  
 
-	def find_location(location)
+    return url 
+  end
+
+  def retrieve_photos(place_id)
+    flickr.photos.search(:place_id => place_id, :tags => 'landmark', :sort => 'interestingness-desc')
+  end
+
+  def find_location(location)
     url = Addressable::URI.parse('https://www.googleapis.com/freebase/v1/search')
     url.query_values = {
       query: location,
       type: "/location/location"
-        }
+    }
     from_freebase = HTTParty.get(url, :format => :json)
     mid = from_freebase["result"][0]["mid"]
     description = HTTParty.get("https://www.googleapis.com/freebase/v1/topic#{mid}?filter=/common/topic/description", :format => :json)
